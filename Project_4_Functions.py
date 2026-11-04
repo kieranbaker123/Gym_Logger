@@ -23,16 +23,17 @@
 # Gym tracker                                     EXPAND ON DESCRIPTION
 #
 
-fileName = 'gymLog.csv'
 import matplotlib as plt
 import numpy as np
 from datetime import datetime
+import os
 
-#---------------------------------------------------
-#  Inputs
-#---------------------------------------------------
+def initFile(fileName):
+    if not os.path.exists(fileName):
+        with open(fileName, 'w') as file:
+            file.write("Date,Exercise,Weight,Reps,Score\n")
 
-def plotData(exercise):
+def plotData(fileName, exercise):
     data = readData()
     dates = []
     scores = []
@@ -49,8 +50,8 @@ def plotData(exercise):
     plt.grid()
     plt.show()
 
-def writeData():
-    data = readData()
+def writeData(fileName):
+    data = readData(fileName)
     while True:
         print("\n=-=-=- Enter New Lift -=-=-=\n")
         date = input("Enter date (MM/DD/YYYY): ").strip()
@@ -68,7 +69,7 @@ def writeData():
                 reps = int(input("Enter reps performed: "))
         a = input(f'Save this Exercise: {reps} reps of {exercise} at {weight} lbs on the date {date} (y/n)')
         if a == 'y':
-            score = weight * np.log(reps+8)
+            score = weight * np.log(reps+2)
             break
         else: 
             continue
@@ -77,18 +78,8 @@ def writeData():
       
     print(f"\nSuccessfully saved {exercise}: {weight} lbs x {reps} reps!")
         
-def readData():
+def readData(fileName):
     data = np.genfromtxt(fileName, delimiter=',', dtype=str)
     if data.ndim == 1 and data.size > 0:
         data = data.reshape(1, -1)
     return data
-
-#---------------------------------------------------
-#  Computations
-#---------------------------------------------------
-
-writeData()
-
-#---------------------------------------------------
-#  Outputs
-#---------------------------------------------------

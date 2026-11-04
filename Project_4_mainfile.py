@@ -24,67 +24,63 @@
 #
 
 fileName = 'gymLog.csv'
-from datetime import datetime
-import matplotlib.pyplot as plt
-import numpy as np
-import os
 
-def initFile():
-    if not os.path.exists(fileName):
-        with open(fileName, 'w') as file:
-            file.write("Date,Exercise,Weight,Reps,Score\n")
+from Project_4_Functions import initFile, plotData, writeData, readData
 
-def plotData(exercise, fileName = 'gymLog.csv'):
-    data = readData()
-    dates = []
-    scores = []
-    i = 0
-    for a in data[:,1]:
-        if a == exercise:
-            dates.append(datetime.strptime(data[i,0], '%m/%d/%Y'))
-            scores.append(data[i,4])
-        i = i + 1
-    plt.figure(figsize=(8,8))
-    plt.plot(dates, scores, marker='o', color='blue')
-    plt.title(f'Score Progress of {exercise}')
-    plt.xlabel("Date")
-    plt.ylabel('Score')
-    plt.grid()
-    plt.show()
+def toNum(a):
+    if ( a == '1' or a == '2' or a == '3' or a == '4' ):
+        a = int(a)
+    elif ( a == 'four' ):
+        a = int(4)
+    elif ( a == 'three' ):
+        a = int(3)
+    elif ( a == 'two' ):
+        a = int(2)
+    elif ( a == 'one' ):
+        a = int(1)
+    else:
+        a = -100
+    return a
 
-def writeData(fileName = 'gymLog.csv'):
-    data = readData(fileName)
-    while True:
-        print("\n=-=-=- Enter New Lift -=-=-=\n")
-        date = input("Enter date (MM/DD/YYYY): ").strip()
-        while True:
-            exercise = input("Enter Exercise Name: ").strip().upper()
-            if exercise in np.char.upper(data[:, 1]):
-                break
-            else:
-                a = input(f'Exercise {exercise} not found, create new? (y/n): ').strip().lower()
-                if a == 'y':
-                    break
-                else:
-                    continue
-        weight = int(input("Enter weight used (lbs): "))
-        reps = int(input("Enter reps performed: "))
-        a = input(f'\nSave this Exercise: {reps} reps of {exercise} at {weight} lbs on the date {date} (y/n): ').strip().lower()
-        if a == 'y':
-            score = round(weight * np.log(reps+2) * 1000)
+def main():
+    while True:    
+        file = input("Enter csv File name: ")
+        isTrue = input(f"\nUse file {file}? (y/n): ")
+        if isTrue == 'y':
             break
-        else: 
+        else:
+            print("\n\n")
             continue
-    with open(fileName, 'a') as file:
-        file.write(f"{date},{exercise},{weight},{reps},{score}\n")
-      
-    print(f"\nSuccessfully saved {exercise}: {weight} lbs x {reps} reps!")
+    while True:
+        initFile(file)
+        print("+=-=-=-=-=-=-=-=-=-=-=-=-=-=+\n")
+        print("|                           |\n")
+        print("|     Gym Logger 67000      |\n")
+        print("|                           |\n")
+        print("+=-=-=-=-=-=-=-=-=-=-=-=-=-=+\n")
+        print("|                           |\n")
+        print("|  Type 1:   Log Exercise   |\n")
+        print("|  Type 2:    Plot Data     |\n")
+        print("|  Type 3:   View Records   |\n")
+        print("|                           |\n")
+        print("|  Type 4:   Quit Program   |\n")
+        print("|                           |\n")
+        print("+=-=-=-=-=-=-=-=-=-=-=-=-=-=+\n")
+        a = str(input().strip().lower())
+        a = toNum(a)
+        if a == -100:
+            print("\n\n  Invalid Input, Try Again \n\n")
+            continue
+        if a == 1:
+            writeData(file)
         
-def readData(fileName = 'gymLog.csv'):
-    data = np.genfromtxt(fileName, delimiter=',', dtype=str,skip_header=1)
-    if data.ndim == 1 and data.size > 0:
-        data = data.reshape(1, -1)
-    return data
-
-
-
+            
+            
+            
+        if a == 4:
+            break
+        
+main()
+    
+        
+    
