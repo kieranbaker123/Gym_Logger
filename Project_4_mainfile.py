@@ -25,7 +25,7 @@
 
 fileName = 'gymLog.csv'
 
-from Project_4_Functions import initFile, plotData, writeData, readData
+from Project_4_Functions import initFile, plotData, writeData, readData, viewRecords
 
 def toNum(a):
     if ( a == '1' or a == '2' or a == '3' or a == '4' ):
@@ -73,10 +73,12 @@ def main():
             continue
         if a == 1:
             writeData(file)
-        
-            
-            
-            
+        if a == 2:
+            exercise = getExercise()
+
+        if a == 3
+            exercise = getExercise()
+            viewRecords(file,exercise)
         if a == 4:
             break
         

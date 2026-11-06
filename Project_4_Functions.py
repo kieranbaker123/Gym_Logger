@@ -83,3 +83,23 @@ def readData(fileName):
     if data.ndim == 1 and data.size > 0:
         data = data.reshape(1, -1)
     return data
+
+def viewRecords(fileName, exercise):
+    data = readData(fileName)
+    weightMax = 0;
+    scoreMax = 0;
+    scoreMaxRep = 0;
+    scoreMaxWeight = 0;
+    for i, row_exercise in enumerate(data[:, 1]):
+        if row_exercise == exercise:
+            if data[i,2] > weightMax:
+                weightMax = data[i,2]
+            if data[i,4] > scoreMax:
+                scoreMax = data[i,4]
+                scoreMaxRep = data[i,3]
+                scoreMaxWeight = data[i,2]
+    print(f'\n\nYour Most Impressive Lift by Weight of {exercise} is {weightMax}')
+    print(f'\n\nYour Most Impressive Set overall of {exercise} is {scoreMaxRep} rep(s) of {scoreMaxWeight}')
+    print('\n\n')
+        
+            
