@@ -74,9 +74,19 @@ def main():
         if a == 1:
             writeData(file)
         if a == 2:
-            print('\n')
+            print("\n\n+=-=-=-=-=-=-=-=-=-=-=-=-=-=+\n")
+            print("|                           |\n")
+            print("|  Type 1:   Plot Score     |\n")
+            print("|  Type 2:   Plot Weight    |\n")
+            print("|                           |\n")
+            print("+=-=-=-=-=-=-=-=-=-=-=-=-=-=+\n")
+            a = str(input().strip().lower())
+            a = toNum(a)
             exercise = getExercise(file)
-            plotData(file,exercise)
+            if a == 1:
+                plotData(file,exercise,4)
+            if a == 2:
+                plotData(file,exercise,2)
         if a == 3:
             print('\n')
             exercise = getExercise(file)

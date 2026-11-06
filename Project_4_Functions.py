@@ -47,19 +47,22 @@ def initFile(fileName):
         with open(fileName, 'w') as file:
             file.write("Date,Exercise,Weight,Reps,Score\n")
 
-def plotData(fileName, exercise):
+def plotData(fileName, exercise, a):
     data = readData(fileName)
     dates = []
     scores = []
     for i, row_exercise in enumerate(data[:, 1]):
         if row_exercise == exercise:
             dates.append(datetime.strptime(data[i,0], '%m/%d/%Y'))
-            scores.append(data[i, 4])   
+            scores.append(data[i, a])   
     plt.figure()
     plt.plot(dates, scores, marker='o', color='blue')
-    plt.title(f'Score Progress of {exercise}')
+    plt.title(f'Progress of {exercise}')
     plt.xlabel("Date")
-    plt.ylabel('Score')
+    if a == 2:
+        plt.xlabel("Weight")
+    if a == 4:
+        plt.ylabel("Score")
     plt.grid()
     plt.show()
     print(f'\nData for {exercise} Successfully plotted.\n\n')
