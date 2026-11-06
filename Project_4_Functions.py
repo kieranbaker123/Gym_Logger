@@ -23,10 +23,24 @@
 # Gym tracker                                     EXPAND ON DESCRIPTION
 #
 
-import matplotlib as plt
+import matplotlib.pyplot as plt
 import numpy as np
 from datetime import datetime
 import os
+
+def getExercise(fileName):
+    data = readData(fileName)
+    while True:
+        exercise = input("Enter Exercise Name: ").strip().upper()
+        if exercise in np.char.upper(data[:, 1]):
+            break
+        else:
+            a = input(f'Exercise {exercise} not found, create new? (y/n): ').strip().lower()
+            if a == 'y':
+                break
+            else:
+                continue
+    return exercise
 
 def initFile(fileName):
     if not os.path.exists(fileName):
@@ -34,10 +48,9 @@ def initFile(fileName):
             file.write("Date,Exercise,Weight,Reps,Score\n")
 
 def plotData(fileName, exercise):
-    data = readData()
+    data = readData(fileName)
     dates = []
     scores = []
-    
     for i, row_exercise in enumerate(data[:, 1]):
         if row_exercise == exercise:
             dates.append(datetime.strptime(data[i,0], '%m/%d/%Y'))
@@ -49,25 +62,16 @@ def plotData(fileName, exercise):
     plt.ylabel('Score')
     plt.grid()
     plt.show()
+    print(f'\nData for {exercise} Successfully plotted.\n\n')
 
 def writeData(fileName):
-    data = readData(fileName)
+    print("\n=-=-=- Enter New Lift -=-=-=\n")
+    date = input("Enter date (MM/DD/YYYY): ").strip()
     while True:
-        print("\n=-=-=- Enter New Lift -=-=-=\n")
-        date = input("Enter date (MM/DD/YYYY): ").strip()
-        while True:
-            exercise = input("Enter Exercise Name: ").strip().upper()
-            if exercise in np.char.upper(data[:, 1]):
-                break
-            else:
-                a = input(f'Exercise {exercise} not found, create new? (y/n): ').strip().lower()
-                if a == 'y':
-                    break
-                else:
-                    continue
-                weight = int(input("Enter weight used (lbs): "))
-                reps = int(input("Enter reps performed: "))
-        a = input(f'Save this Exercise: {reps} reps of {exercise} at {weight} lbs on the date {date} (y/n)')
+        exercise = getExercise(fileName)
+        weight = int(input("Enter weight used (lbs): "))
+        reps = int(input("Enter reps performed: "))
+        a = input(f'Save this Exercise: {reps} reps of {exercise} at {weight} lbs on the date {date} (y/n): ')
         if a == 'y':
             score = weight * np.log(reps+2)
             break
@@ -76,8 +80,8 @@ def writeData(fileName):
     with open(fileName, 'a') as file:
         file.write(f"{date},{exercise},{weight},{reps},{score}\n")
       
-    print(f"\nSuccessfully saved {exercise}: {weight} lbs x {reps} reps!")
-        
+    print(f"\nSuccessfully saved {exercise}: {weight} lbs x {reps} reps!\n")
+    
 def readData(fileName):
     data = np.genfromtxt(fileName, delimiter=',', dtype=str)
     if data.ndim == 1 and data.size > 0:
@@ -86,20 +90,25 @@ def readData(fileName):
 
 def viewRecords(fileName, exercise):
     data = readData(fileName)
-    weightMax = 0;
-    scoreMax = 0;
-    scoreMaxRep = 0;
-    scoreMaxWeight = 0;
+    weightMax = int(0)
+    scoreMax = int(0)
+    scoreMaxRep = 0
+    scoreMaxWeight = 0
+    total = 0
     for i, row_exercise in enumerate(data[:, 1]):
         if row_exercise == exercise:
-            if data[i,2] > weightMax:
-                weightMax = data[i,2]
-            if data[i,4] > scoreMax:
-                scoreMax = data[i,4]
-                scoreMaxRep = data[i,3]
-                scoreMaxWeight = data[i,2]
-    print(f'\n\nYour Most Impressive Lift by Weight of {exercise} is {weightMax}')
-    print(f'\n\nYour Most Impressive Set overall of {exercise} is {scoreMaxRep} rep(s) of {scoreMaxWeight}')
+            weight = int(float(data[i,2]))
+            reps = int(float(data[i,3]))
+            total = total + weight * reps
+            if int(float(data[i,2])) > weightMax:
+                weightMax = int(float(data[i,2]))
+            if int(float(data[i,4])) > scoreMax:
+                scoreMax = int(float(data[i,4]))
+                scoreMaxRep = int(float(data[i,3]))
+                scoreMaxWeight = int(float(data[i,2]))
+    print(f'\n\nYour Most Impressive Lift by Weight of {exercise} is {weightMax}lbs')
+    print(f'\n\nYour Most Impressive Set overall of {exercise} is {scoreMaxRep} rep(s) of {scoreMaxWeight}lbs')
+    print(f'\n\nYou have lifted a Total of {total}lbs')
     print('\n\n')
         
             
