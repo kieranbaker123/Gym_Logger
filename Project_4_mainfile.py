@@ -26,6 +26,7 @@
 fileName = 'gymLog.csv'
 
 from Project_4_Functions import initFile, plotData, writeData, viewRecords, getExercise
+from Project_4_Menus import printPlottingMenu, printMainMenu
 
 def toNum(a):
     if ( a == '1' or a == '2' or a == '3' or a == '4' ):
@@ -53,19 +54,7 @@ def main():
             continue
     while True:
         initFile(file)
-        print("+=-=-=-=-=-=-=-=-=-=-=-=-=-=+\n")
-        print("|                           |\n")
-        print("|     Gym Logger 67000      |\n")
-        print("|                           |\n")
-        print("+=-=-=-=-=-=-=-=-=-=-=-=-=-=+\n")
-        print("|                           |\n")
-        print("|  Type 1:   Log Exercise   |\n")
-        print("|  Type 2:    Plot Data     |\n")
-        print("|  Type 3:   View Records   |\n")
-        print("|                           |\n")
-        print("|  Type 4:   Quit Program   |\n")
-        print("|                           |\n")
-        print("+=-=-=-=-=-=-=-=-=-=-=-=-=-=+\n")
+        printMainMenu()
         a = str(input().strip().lower())
         a = toNum(a)
         if a == -100:
@@ -74,12 +63,7 @@ def main():
         if a == 1:
             writeData(file)
         if a == 2:
-            print("\n\n+=-=-=-=-=-=-=-=-=-=-=-=-=-=+\n")
-            print("|                           |\n")
-            print("|  Type 1:   Plot Score     |\n")
-            print("|  Type 2:   Plot Weight    |\n")
-            print("|                           |\n")
-            print("+=-=-=-=-=-=-=-=-=-=-=-=-=-=+\n")
+            printPlottingMenu()
             a = str(input().strip().lower())
             a = toNum(a)
             exercise = getExercise(file)

@@ -1,0 +1,22 @@
+def printMainMenu():
+    print("+=-=-=-=-=-=-=-=-=-=-=-=-=-=+\n")
+    print("|                           |\n")
+    print("|     Gym Logger 67000      |\n")
+    print("|                           |\n")
+    print("+=-=-=-=-=-=-=-=-=-=-=-=-=-=+\n")
+    print("|                           |\n")
+    print("|  Type 1:   Log Exercise   |\n")
+    print("|  Type 2:    Plot Data     |\n")
+    print("|  Type 3:   View Records   |\n")
+    print("|                           |\n")
+    print("|  Type 4:   Quit Program   |\n")
+    print("|                           |\n")
+    print("+=-=-=-=-=-=-=-=-=-=-=-=-=-=+\n")
+    
+def printPlottingMenu():
+    print("\n\n+=-=-=-=-=-=-=-=-=-=-=-=-=-=+\n")
+    print("|                           |\n")
+    print("|  Type 1:   Plot Score     |\n")
+    print("|  Type 2:   Plot Weight    |\n")
+    print("|                           |\n")
+    print("+=-=-=-=-=-=-=-=-=-=-=-=-=-=+\n")
